@@ -35,7 +35,9 @@ class Wallet {
   - deletedAt: datetime
   + switchWallet()
   + generateSeed()
-  + gennerateWallet()
+  + generateWallet()
+  + generatePrivateKey()
+  + generatePublicKey()
 }
 
 class Document {
@@ -55,11 +57,11 @@ class Document {
   - updatedAt: datetime
   - deletedAt: datetime
   + uploadFile()
-  - encryptFile()
-  - decryptFile()
+  - encryptFile(ascon-128a)
+  - decryptFile(ascon-128a)
   + download()
-  + shareFile()
-  + privewFile()
+  + ManageDocumentShare()
+  + previewFile()
   + updateDocument()
   +deleteDocument()
 }
@@ -141,6 +143,6 @@ Wallet --* DocumentShare
 User -- Contact
 
 Document -[hidden]- MimeType
-MimeType -[hidden]- DocStatus
-DocumentShare -[hidden]- ContactStatus
+ContactStatus -[hidden]- DocStatus
+Folder -[hidden]- ContactStatus
 @enduml

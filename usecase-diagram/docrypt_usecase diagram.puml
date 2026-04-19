@@ -5,7 +5,7 @@ skinparam defaultFontColor #222222
 skinparam titleFontSize 20
 skinparam Linetype polyline
 left to right direction
-title UseCase Diagram - Wallet Document System
+title Use Case Diagram - Wallet Document System
 
 actor Pengguna as p
 

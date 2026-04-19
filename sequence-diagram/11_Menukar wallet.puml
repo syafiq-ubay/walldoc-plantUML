@@ -20,14 +20,14 @@ activate System
 alt Verify gagal
     System -> View: Kembalikan gagal verify
     activate View
-    View -> User: Tampilkan "seed phrase incoret"
+    View -> User: Tampilkan "seed phrase incorrect"
     deactivate View
 else Verify berhasil
     System -> View: Kembalikan berhasil verify
     deactivate System
     activate View
 end
-    View -> System: Kirim nama dan seed phrasee
+    View -> System: Kirim nama dan seed phrase
     activate System
     System -> DB2: CreateWalletByUserId()
     deactivate System

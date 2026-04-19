@@ -26,7 +26,7 @@ alt Verify gagal
     System -> View: Kembalikan gagal verify
     deactivate System
     activate View
-    View -> User: Tampilkan "password incoret"
+    View -> User: Tampilkan "password incorrect"
     deactivate View
 else Verify berhasil
     DB -> System: Kembalikan respon berhasil verify
