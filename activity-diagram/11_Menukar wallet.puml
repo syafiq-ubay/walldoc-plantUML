@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD11: Menukar Wallet)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik profile user;
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan menu user;
+|<b><font size=16>Pengguna</font></b>|
+:Klik "Switch Wallet" pada menu user;
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan wallet yang dimiliki dan sedang aktif;
+|<b><font size=16>Pengguna</font></b>|
+:klik tombol "Use Other Wallet";
+:Masukkan nama yang diinginakn dan seed phrase
+yang dimiliki kemudian Klik "Import wallet";
+|<b><font size=16>Sistem</font></b>|
+if (apakah seed phrase valid?) then (Ya)
+    :Simpan wallet ke dalam database;
+    :Mengganti token dengan yang baru dan private key dari wallet;
+    else (Tidak)
+    :Menampilkan error ke user;
+  endif
+  :Menampilkan halaman aplikasi dari wallet;
+stop
+
+@enduml

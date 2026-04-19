@@ -1,0 +1,40 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD01: Register)
+
+actor Pengguna as User
+boundary "Register" as View
+control "Register" as System
+entity "User" as DB
+entity "Wallet" as DB2
+
+activate User
+User -> View: Masukan user password dan jumlah phrase
+activate View
+View -> System: Kirim request seed
+deactivate View
+
+alt Register Gagal
+
+    activate System
+    System -> View: Kirim error register
+    activate View
+    View -> User: Tampilkan error input
+    deactivate View
+else Register Berhasil
+    ' activate System
+    System -> DB: CreateUser()
+    System -> DB2: CreateWalletByUser()
+    deactivate System
+    activate DB2
+    DB2 -> View: Create token kirim Success register
+    deactivate DB2
+    activate View
+    View -> User: Pindahkan ke halaman dashboard
+    deactivate View
+end
+deactivate User
+@enduml

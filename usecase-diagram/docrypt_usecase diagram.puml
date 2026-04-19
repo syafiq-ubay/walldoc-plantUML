@@ -1,0 +1,49 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam Linetype polyline
+left to right direction
+title UseCase Diagram - Wallet Document System
+
+actor Pengguna as p
+
+rectangle "Sistem Aplikasi Dompet Dokumen" {
+  (USD01: Register) as USD01
+  (USD02: Login) as USD02
+  (USD03: Download Dokumen) as USD03
+  (USD04: Mengelola Dokumen) as USD04
+  (USD05: Mengelola Dokumen Dibagikan Kepada Saya) as USD05
+  (USD06: Mengelola Dokumen Trash) as USD06
+  (USD07: Mengelola Contact) as USD07
+  (USD08: Mengelola Dokumen Share) as USD08
+  (USD09: Membuka Dokumen) as USD09
+  (USD10: Mengubah Password) as USD10
+  (USD11: Menukar Wallet) as USD11
+  (USD12: Logout) as USD12
+
+}
+
+' ==================== RELATIONSHIP ====================
+p -- USD01
+p -- USD02
+' p -- USD03
+' USD03 ..> USD06 : <<extend>>
+' USD03 ..> USD07 : <<extend>>
+' USD03 ..> USD05 : <<extend>>
+p -- USD04
+USD04 ..> USD03 : <<extend>>
+USD04 ..> USD05 : <<extend>>
+USD04 ..> USD09 : <<extend>>
+' p -- USD05
+p -- USD06
+p -- USD07
+' p -- USD08
+USD07 ..> USD08 : <<extend>>
+' p -- USD09
+p -- USD10
+p -- USD11
+p -- USD12
+
+@enduml

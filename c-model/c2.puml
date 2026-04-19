@@ -1,0 +1,41 @@
+@startuml
+!include D:/C4-PlantUML/C4_Container.puml
+
+' langsung pakai raw url
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/nodejs.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/react.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/redis.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons/postgresql.puml
+!include https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5/users.puml
+
+SHOW_PERSON_OUTLINE()
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 13
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam ArrowColor black
+skinparam ArrowStyle dashed
+skinparam ArrowFontColor white
+
+title Diagram Wallet Document System
+
+Person(customer, VUs, "meniru perilaku users untuk melakukan GET")
+
+' atur orientasi
+' LAYOUT_LEFT_RIGHT()
+LAYOUT_WITH_LEGEND()
+
+System(system, "System") {
+    Container(spa, "SPA", "React/NextJS", "Single Page Application", $sprite="react")
+    Container(api, "API", "NodeJS/NestJS", "Handles all business logic", $sprite="nodejs")
+    ContainerDb(db, "Database", "PostgreSQL", "Holds product, order and invoice information", $sprite="postgresql")
+    Container(cache, "Cache", "Redis", "Rate limited for API requests", $sprite="redis")
+}
+
+' hubungan
+Rel(customer, spa, "GET requests", "")
+Rel(spa, api, "API calls", "HTTPS/JSON")
+Rel(api, db, "Reads/Writes", "SQL/JDBC, Port 5432")
+Rel(db, cache, "Caching", "Redis protocol")
+
+@enduml

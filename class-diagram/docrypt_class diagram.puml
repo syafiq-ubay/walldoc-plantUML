@@ -1,0 +1,146 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+'skinparam linetype ortho
+skinparam linetype polyline
+left to right direction
+title Class Diagram - Wallet Document System
+
+class User {
+    - Id: string
+  - username: string?
+  - password: string?
+  - mnemonicHash: string
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + login()
+  + changePassword()
+  + generateToken()
+  + logout()
+}
+
+class Wallet {
+  - Id: sting
+  - userId: string
+  - name: string
+  - address: string
+  - publicKey: string
+  - derivatePath: string
+  - limit: int
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + switchWallet()
+  + generateSeed()
+  + gennerateWallet()
+}
+
+class Document {
+  - Id: string
+  - walletId: string
+  - folderId: string?
+  - fileName: string
+  - fileSize: int
+  - filePath: string
+  - ecryptSize: int
+  - chunkSizes : int
+  - mimeType: MimeType
+  - nonce: string
+  - associatedData: string?
+  - keyHash: string
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + uploadFile()
+  - encryptFile()
+  - decryptFile()
+  + download()
+  + shareFile()
+  + privewFile()
+  + updateDocument()
+  +deleteDocument()
+}
+
+class Contact {
+  - Id: string
+  - userId: string
+  - name: string
+  - address: string
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + addContact()
+  + validationAddress()
+  + updateContact()
+  + deleteContact()
+}
+
+class Folder {
+  - Id: string
+  - walletId: string
+  - name: string
+  - parentId: string?
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + createFolder()
+  + updateFolder()
+  + deleteFolder()
+ }
+
+class DocumentShare {
+  - id: string
+  - documentId: string
+  - walletId: string
+  - receiverAddress: string
+  - encryptKey: string
+  - createdAt: datetime
+  - updatedAt: datetime
+  - deletedAt: datetime
+  + openFile()
+  + downloadFile()
+  + showDetails()
+  + removeAccess()
+}
+
+enum MimeType {
+  PDF
+  DOC
+  DOCX
+  XLS
+  XLSX
+  CSV
+  TXT
+  JPG
+  PNG
+  ZIP
+  MP4
+}
+
+enum DocStatus {
+  Done
+  In Process
+}
+
+enum ContactStatus {
+  Logged
+  Not Logged
+}
+
+' ==================== RELATIONSHIP ====================
+User -[hidden]- Wallet
+User "1"--*"*" Wallet
+' User -- Document
+Wallet --o Document
+Folder --o Document
+Document --* DocumentShare
+Wallet --* DocumentShare
+User -- Contact
+
+Document -[hidden]- MimeType
+MimeType -[hidden]- DocStatus
+DocumentShare -[hidden]- ContactStatus
+@enduml

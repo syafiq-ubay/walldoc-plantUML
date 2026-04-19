@@ -1,0 +1,150 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD05: Mengelola Documents Dibagikan kepada Saya)
+
+actor Pengguna as User
+boundary "Shared With Me" as View
+control "Document Share" as System
+entity "User" as DB
+entity "DocumentShare" as DB2
+' entity "DocumentShare" as DB3
+database "Storage" as Storage
+
+==Open share==
+activate User
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+' System -> DB: GetEncryptKeyShare()
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim document id
+deactivate View
+activate System
+System -> DB2: GetEncryptKeyShare()
+activate DB2
+System -> DB2: GetDocumentById()
+DB2 -> System: Kembalikan data share dan document
+System -> DB2: GetPathDocument()
+DB2 -> Storage: Download chiphertext file 
+deactivate DB2
+activate Storage
+Storage -> System: Kembalikan chiphertext file 
+deactivate Storage
+System -> View: Decrypt chiphertext 
+deactivate System
+activate View
+View -> User: Tampilkan isi file
+deactivate View
+
+==Download share==
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+' System -> DB: GetEncryptKeyShare()
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim document id
+deactivate View
+activate System
+System -> DB2: GetEncryptKeyShare()
+activate DB2
+System -> DB2: GetDocumentById()
+DB2 -> System: Kembalikan data share dan document
+System -> DB2: GetPathDocument()
+DB2 -> Storage: Download chiphertext file 
+deactivate DB2
+activate Storage
+Storage -> System: Kembalikan chiphertext file 
+deactivate Storage
+System -> View: Decrypt chiphertext 
+deactivate System
+activate View
+View -> User: Kembalikan hasil decrypt file 
+deactivate View
+
+==Remove access==
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+activate DB
+System -> DB: GetWalletId()
+deactivate System
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim walletId
+deactivate View
+activate System
+System -> DB2: DeleteShareByWlletId()
+deactivate System
+activate DB2
+DB2 -> System: Kembalikan respon success
+deactivate DB2
+activate System
+System -> View: Kembalikan success delete
+deactivate System
+activate View
+View -> User: Tampilkan file yang diterima
+deactivate View
+
+deactivate User
+@enduml

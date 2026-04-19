@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD07: Mengelola Contacts)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "Contacts";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "Contacts";
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik tombol "Add contact";
+    floating note left: Tambah Contact
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form add contact;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan nama dan address tujuan
+    kemudian Klik "Save contact";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah address valid?) then (Ya)
+        :Simpan contact ke database sesuai input;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+    :Menampilkan contacts yang tersimpan;
+
+|<b><font size=16>Pengguna</font></b>|
+:Klik titik tiga pada contact kemudian pilih "Edit";
+floating note left: Update contact
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form untuk masukan perubahan yang diinginkan;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan nama baru atau address kemudian Klik "Update contact";
+|<b><font size=16>Sistem</font></b>|
+if (apakah address valid?) then (Ya)
+    :Simpan update kedalam database;
+    else (Tidak)
+    :Menampilkan error ke user;
+endif
+    :Menampilkan contact yang telah di edit;
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik titik tiga pada contact kemudian pilih "Delete";
+    floating note left: Delete contact
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan dialog konfirmasi untuk melakukan delete;
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik "Delete" pada dialog;
+    |<b><font size=16>Sistem</font></b>|
+    :Melakukan hard delete pada data;
+    :Menampilkan contact yang dimiliki;
+
+stop
+
+@enduml

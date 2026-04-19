@@ -1,0 +1,51 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD06: Mengelola Trash)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "Trash";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "Trash";
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik kanan file/folder yang diinginkan
+     kemudian pilih "Restore";
+    floating note left: Restore file/folder
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form untuk masukan password action;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan password user kemudian Klik "Restore file/folder";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah password valid?) then (Ya)
+        :Hapus soft delete pada file/folder pada database;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+    :Menampilkan folder/file yang terhapus;
+
+|<b><font size=16>Pengguna</font></b>|
+:Klik kanan file/folder yang diinginkan
+    kemudian pilih "Delete";
+floating note left: Delete file/folder
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form untuk masukan password action;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan password user kemudian Klik "Delete file/folder";
+|<b><font size=16>Sistem</font></b>|
+if (apakah password valid?) then (Ya)
+    :Melakukan delete permanen pada file yang dipilih
+    kemudian simpan perubahan pada database;
+    else (Tidak)
+    :Menampilkan error ke user;
+endif
+:Menampilkan folder/file yang terhapus;
+
+stop
+
+@enduml

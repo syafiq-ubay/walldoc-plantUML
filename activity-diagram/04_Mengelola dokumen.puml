@@ -1,0 +1,71 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD04: Mengelola Dokuments)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "My file";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "My file";
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik tombol "Upload file";
+    floating note left: Upload file
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form upload documents;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan dokumen yang diinginkan dan password user
+    kemudian Klik "Upload & Encrypt";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah password/documents valid?) then (Ya)
+        :Encrypt documents menggunakan 
+        private key, password dan id user;
+        :Simpan metadata ke database dan
+        simpan ciphertext ke backend;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+    :Menghitung kembali storage yang digunakan;
+    :Menampilkan document yang tersimpan;
+
+|<b><font size=16>Pengguna</font></b>|
+:Klik kanan file/folder yang diinginkan
+atau klik titik tiga jika view List kemudian pilih "Rename";
+floating note left: Rename file/folder
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form untuk masukan password action;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan nama baru dan password user kemudian Klik "Rename file/folder";
+|<b><font size=16>Sistem</font></b>|
+if (apakah password valid?) then (Ya)
+    :Simpan update kedalam database;
+    else (Tidak)
+    :Menampilkan error ke user;
+endif
+    :Menampilkan file/folder yang di rename;
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik kanan file/folder yang diinginkan
+    atau klik titik tiga jika view List kemudian pilih "Delete";
+    floating note left: Delete file/folder
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form untuk masukan password action;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan password user kemudian Klik "Delete file/folder";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah password valid?) then (Ya)
+        :Pindahkan file yang di hapus ke trash,
+        Simpan perubahan pada database;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+    :Menampilkan documents yang dimilikik;
+
+stop
+
+@enduml

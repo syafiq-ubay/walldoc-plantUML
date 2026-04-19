@@ -1,0 +1,114 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD07: Mengelola Contacts)
+
+actor Pengguna as User
+boundary "Contacts" as View
+control "Contacts" as System
+entity "Contact" as DB
+entity "DocumentShare" as DB2
+' database "Storage" as Storage
+
+==Create contact==
+activate User
+User -> View: Masukan nama dan address
+activate View
+View -> System: Verify address
+deactivate View
+activate System
+
+alt Verify gagal
+    System -> View: Kembalikan gagal verify
+    activate View
+    View -> User: Tampilkan "address incorrect"
+    deactivate View
+else Verify berhasil
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim nama dan address
+deactivate View
+activate System
+System -> DB: CreateContact()
+deactivate System
+activate DB
+DB -> System: Kembalikan respon success create
+deactivate DB
+activate System
+System -> View: Kembalikan success create
+deactivate System
+activate View
+View -> User: Tampilkan contact yang tersimpan
+deactivate View
+
+==Update contact==
+User -> View: Masukan nama dan address
+activate View
+View -> System: Verify address
+deactivate View
+activate System
+
+alt Verify gagal
+    System -> View: Kembalikan gagal verify
+    activate View
+    View -> User: Tampilkan "address incorrect"
+    deactivate View
+else Verify berhasil
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim nama dan address
+deactivate View
+activate System
+System -> DB: UpdateContact()
+deactivate System
+activate DB
+DB -> System: Kembalikan respon success update
+deactivate DB
+activate System
+System -> View: Kembalikan success update
+deactivate System
+activate View
+View -> User: Tampilkan contact yang tersimpan
+deactivate View
+
+==Delete contact==
+User -> View: Konfirmasi delete
+activate View
+View -> System: Kirim id contact
+deactivate View
+activate System
+
+alt Batal
+    System -> View: Batalkan proses delete
+    activate View
+    View -> User: Tampilkan daftar contacts
+    deactivate View
+else Konfirmasi
+    System -> View: Lanjutkan proses delete
+    deactivate System
+    activate View
+end
+View -> System: Kirim Id Contact
+deactivate View
+activate System
+System -> DB2: DeleteRowDocumentSharByWalletId()
+System -> DB: DeleteRowContactById()
+deactivate System
+activate DB
+DB -> System: Kembalikan respon success delete
+deactivate DB
+activate System
+System -> View: Kembalikan success delete
+deactivate System
+activate View
+View -> User: Tampilkan daftar contact
+deactivate View
+
+deactivate User
+@enduml

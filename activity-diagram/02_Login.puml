@@ -1,0 +1,43 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD02: Login)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Buka aplikasi dari browser;
+:Klik menu login;
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman login untuk memasukkan mnemonic phrase;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan mnemonic phrase dan setujui persyaratan
+kemudian klik tombol "Login";
+|<b><font size=16>Sistem</font></b>|
+:Cek apakah mnemonic phrase sesuai dengan standart BIP39;
+if (Mnemonic valid?) then (Ya)
+  :Lakukan Hash mnemonic phrase yang dimasukkan;
+  :Cocokkan hash mnemonic dengan database;
+  if (Hash cocok dengan database?) then (Ya)
+    :Autentikasi berhasil;
+    else (Tidak)
+    :Menampilkan form untuk membuat action password;
+    |<b><font size=16>Pengguna</font></b>|
+    :Memasukan password dan konfirmasi kemudian klik "Create account";
+    |<b><font size=16>Sistem</font></b>|
+    :Generate User baru dari password;
+    :Generate wallet dari mnemonic phrase;
+    :Simpan data user dan
+    wallet ke database;
+  endif
+  :Tampilkan dashboard sesuai
+  dengan mnemonic phrase;
+else (Tidak)
+  :Tampilkan pesan error
+  "Invalid seed phrase";
+endif
+stop
+
+@enduml

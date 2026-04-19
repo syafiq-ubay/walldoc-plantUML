@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD03: Download Dokumen)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "My file";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "My file";
+|<b><font size=16>Pengguna</font></b>|
+:Klik kanan file/folder yang diinginkan
+atau klik titik tiga jika view List
+kemudian pilih "Download";
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form untuk masukan password action;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan password user kemudian Klik "Download";
+|<b><font size=16>Sistem</font></b>|
+if (apakah password valid?) then (Ya)
+    :Download ciphertext dari backend  
+    decrypt menggunakan private key, password dan id user;
+    :Kirimkan hasil decrypt ke browser user;
+    else (Tidak)
+    :Menampilkan error ke user;
+  endif
+stop
+
+@enduml

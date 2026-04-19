@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD12: Logout)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik profile user;
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan menu user;
+|<b><font size=16>Pengguna</font></b>|
+:Klik "Log out" pada menu user;
+|<b><font size=16>Sistem</font></b>|
+:Menghapus token yang digunakan
+serta menghapus data pada seasons;
+:Menampilkan halaman login;
+stop
+
+@enduml

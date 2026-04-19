@@ -1,0 +1,26 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD01: Register)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Buka aplikasi dari browser;
+:Klik menu Register;
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman register;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan username dan password lalu pilih
+jumlah seed phrase yang diinginkan
+kemudian Klik "Register";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan seed phrase yang dihasilkan;
+|<b><font size=16>Pengguna</font></b>|
+:Tampilkan dan simpan seed phrase;
+:klik tombol "I have saved it";
+stop
+
+@enduml

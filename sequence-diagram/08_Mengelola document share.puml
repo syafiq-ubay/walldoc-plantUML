@@ -1,0 +1,121 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD08: Mengelola Document Share)
+
+actor Pengguna as User
+boundary "Manage Share" as View
+control "Share" as System
+entity "User" as DB
+entity "DocumentShare" as DB2
+entity "Contact" as DB4
+database "Storage" as Storage
+
+==Share file==
+activate User
+User -> View: Masukan contact dan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim contact tujuan
+activate System
+View -> System: Kirim document id
+System -> DB2: GetPathDocumentById()
+activate DB2
+DB2 -> System: Kembalikan respon path
+deactivate DB2
+System -> Storage: Get file ciphertext()
+activate Storage
+Storage -> System: Kembalikan ciphertext 
+deactivate Storage
+View -> System: Decrypt document dengan key owner
+
+System -> DB4: GetAddress()
+activate DB4
+System -> DB2: GetDocumentById()
+activate DB2
+DB2 -> System: kembalikan data Document
+deactivate DB2
+DB4 -> System: kembalikan publicKeyHex
+deactivate DB4
+System -> View: Simpan publicKeyHex 
+View -> System: Encrypt document dengan publicKey
+deactivate View
+System -> DB: CreateDocumentShare()
+deactivate System
+activate DB
+DB -> System: Kembalikan respon create success
+deactivate DB 
+activate System
+System -> View: Kembalikan create success
+deactivate System
+activate View
+View -> User: Tampilkan file share
+deactivate View
+
+==Remove Access==
+User -> View: Pilih address dan masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+' System -> DB: GetDeletedAt(not null)
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim address tujuan
+deactivate View
+activate System
+System -> DB2: DeleteRowByReceiverAddress()
+deactivate System
+activate DB2
+DB2 -> System: Kembalikan respon remove success
+deactivate DB2 
+activate System
+System -> View: Kembalikan remove success
+deactivate System
+activate View
+View -> User: Tampilkan daftar share document
+deactivate View
+
+
+deactivate User
+@enduml

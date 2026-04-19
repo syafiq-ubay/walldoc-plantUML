@@ -1,0 +1,100 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD06: Mengelola Trash)
+
+actor Pengguna as User
+boundary "Trash" as View
+control "Trash" as System
+entity "User" as DB
+entity "Document" as DB2
+
+==Restore file==
+activate User
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim id document
+deactivate View
+activate System
+System -> DB2: GetDocumentById(DeletedAt: not null)
+activate DB2
+DB2 -> System: Kembalikan document
+System -> DB2: UpdateDeteledAt(null)
+deactivate System
+DB2 -> System: Kembalikan respon file update
+deactivate DB2 
+activate System
+System -> View: Kembalikan file update
+deactivate System
+activate View
+View -> User: Tampilkan file delete
+deactivate View
+
+==Delete(hard) file==
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+activate DB
+alt Verify gagal
+    DB -> System: Kembalikan respon gagal verify
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim id document
+deactivate View
+activate System
+System -> DB2: GetDocumentById(DeletedAt: not null)
+activate DB2
+DB2 -> System: Kembalikan document
+System -> DB2: DeleteRowById()
+deactivate System
+DB2 -> System: Kembalikan respon delete success
+deactivate DB2 
+activate System
+System -> View: Kembalikan delete success
+deactivate System
+activate View
+View -> User: Tampilkan file delete
+deactivate View
+
+deactivate User
+@enduml

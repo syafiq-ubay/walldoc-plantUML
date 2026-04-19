@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD05: Mengelola Document Dibagikan Kepada saya)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "Shared with me";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "Shared with me";
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik kanan file yang diinginkan atau titik tiga
+    jika menggunakan tampilan list kemudian pilih "Open";
+    floating note left: Open shared
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form untuk masukan password action;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan password user kemudian Klik "Open";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah password valid?) then (Ya)
+        :Download ciphertext dari backend  
+        decrypt menggunakan encryptedKey;
+        :Tampilkan preview untuk document;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+
+|<b><font size=16>Pengguna</font></b>|
+:Klik kanan file yang diinginkan atau titik tiga
+jika menggunakan tampilan list kemudian pilih "Download";
+floating note left: Download shared
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form untuk masukan password action;
+|<b><font size=16>Pengguna</font></b>|
+:Masukkan password user kemudian Klik "Download";
+|<b><font size=16>Sistem</font></b>|
+if (apakah password valid?) then (Ya)
+    :Download ciphertext dari backend  
+    decrypt menggunakan encryptedKey;
+    :Kirimkan hasil hasil decrypt ke broser user;
+    else (Tidak)
+    :Menampilkan error ke user;
+endif
+
+    |<b><font size=16>Pengguna</font></b>|
+    :Klik kanan file yang diinginkan atau titik tiga
+    jika menggunakan tampilan list kemudian pilih "Remove access";
+    floating note left: Remove access shared
+    |<b><font size=16>Sistem</font></b>|
+    :Menampilkan form untuk masukan password action;
+    |<b><font size=16>Pengguna</font></b>|
+    :Masukkan password user kemudian Klik "Remove access";
+    |<b><font size=16>Sistem</font></b>|
+    if (apakah password valid?) then (Ya)
+        :Hapus akses pada wallet user kemudian
+        simpan perubahan pada database;
+        else (Tidak)
+        :Menampilkan error ke user;
+    endif
+    :Tampilkan yang dibagikan kepada saya;
+
+stop
+
+@enduml

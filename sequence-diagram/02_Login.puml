@@ -1,0 +1,42 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD02: Login)
+
+actor Pengguna as User
+boundary "Login" as View
+control "Login" as System
+' entity "User" as DB
+entity "Wallet" as DB2
+
+activate User
+User -> View: Masukan seed phrase valid
+activate View
+View -> System: Kirim publicKeyHex
+deactivate View
+
+    activate System
+    System -> DB2: GetPublicKeyHex()
+alt Seed phrase tidak terdaftar
+    activate DB2
+    DB2 -> System: Kembalikan respon login gagal
+    ' deactivate DB2
+    System -> View: Kembalikan login gagal
+    deactivate System
+    activate View
+    View -> User: Tampilkan create user form
+    deactivate View
+else Seed phrase terdaftar
+    DB2 -> System: Kembalikan respon login berhasil
+    deactivate DB2
+    activate System
+    System -> View: Kembalikan login berhasil
+    deactivate System
+    activate View
+    View -> User: Pindahkan ke halaman dashboard
+    deactivate View
+end
+deactivate User
+@enduml

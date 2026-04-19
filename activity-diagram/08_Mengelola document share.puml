@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 12
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+skinparam DefaultTextAlignment center
+title Activity Diagram - (USD08: Mengelola Document Share)
+
+|<b><font size=16>Pengguna</font></b>|
+start
+:Klik menu "My file";
+|<b><font size=16>Sistem</font></b>|
+:Tampilkan halaman "My file";
+|<b><font size=16>Pengguna</font></b>|
+:Klik kanan file yang diinginkan
+atau klik titik tiga jika view List
+kemudian pilih "Share";
+floating note left: Berbagi akses
+|<b><font size=16>Sistem</font></b>|
+:Menampilkan form manage share;
+|<b><font size=16>Pengguna</font></b>|
+:Pilih kontak tujuan mengirim document klik tombol "+"
+kemudian masukan action password,
+lalu klik tombol "save changes";
+|<b><font size=16>Sistem</font></b>|
+if (apakah kontak/password valid?) then (Ya)
+    :Download ciphertext dari backend  
+    decrypt menggunakan private key, password dan id owner
+    kemudian encrypt kembali menggunakan public key penerima;
+    :Simpan encypted key share kedalam database;
+    else (Tidak)
+    :Menampilkan error ke user;
+  endif
+    
+  |<b><font size=16>Pengguna</font></b>|
+  :Klik kanan file yang diinginkan
+  atau klik titik tiga jika view List
+  kemudian pilih "Share";
+  floating note left: Menghapus akses
+  |<b><font size=16>Sistem</font></b>|
+  :Menampilkan form manage share;
+  |<b><font size=16>Pengguna</font></b>|
+  :Pilih kontak yang ingin dihapus akses kemudian 
+  klik tombol "X" lalu masukan action password,
+  setelah itu klik tombol "save changes";
+  |<b><font size=16>Sistem</font></b>|
+  if (apakah kontak/password valid?) then (Ya)
+      :Hapus akses pada contact yang dipilih kemudian
+      simpan perubahan pada database;
+      else (Tidak)
+      :Menampilkan error ke user;
+    endif
+  stop
+
+@enduml

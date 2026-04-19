@@ -1,0 +1,141 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD04: Mengelola Documents)
+
+actor Pengguna as User
+boundary "My File" as View
+control "Documents" as System
+entity "User" as DB
+entity "Document" as DB2
+database "Storage" as Storage
+
+==Upload file==
+activate User
+User -> View: Masukan file dan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+alt Verify gagal
+    activate DB
+    DB -> System: Kembalikan respon gagal verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Encrypt file dengan privateKey
+deactivate View
+activate System
+System -> DB2: CreateMetadata()
+deactivate System
+activate DB2
+DB2 -> Storage: Simpan chiphertext
+DB2 -> System: Kembalikan respon success encrypt
+deactivate DB2
+activate System
+System -> View: Kembalikan success encrypt 
+deactivate System
+activate View
+View -> User: Tampilkan file yang tersimpan
+deactivate View
+
+==Rename file==
+User -> View: Masukan nama dan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+alt Verify gagal
+    activate DB
+    DB -> System: Kembalikan respon gagal verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim nama baru
+deactivate View
+activate System
+System -> DB2: UpdateDocument()
+deactivate System
+activate DB2
+DB2 -> System: Kembalikan respon success
+deactivate DB2
+activate System
+System -> View: Kembalikan success rename
+deactivate System
+activate View
+View -> User: Tampilkan file yang di ubah
+deactivate View
+
+==Delete file==
+User -> View: Masukan password
+activate View
+View -> System: Kirim password verify
+deactivate View
+activate System
+System -> DB: GetVerifyPassword()
+deactivate System
+alt Verify gagal
+    activate DB
+    DB -> System: Kembalikan respon gagal verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan gagal verify
+    deactivate System
+    activate View
+    View -> User: Tampilkan "password incorrect"
+    deactivate View
+else Verify berhasil
+    DB -> System: Kembalikan respon berhasil verify
+    deactivate DB
+    activate System
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+View -> System: Kirim Id Document
+deactivate View
+activate System
+System -> DB2: DeleteDocumentById()
+deactivate System
+activate DB2
+DB2 -> System: Kembalikan respon success
+deactivate DB2
+activate System
+System -> View: Kembalikan success delete
+deactivate System
+activate View
+View -> User: Tampilkan file yang tersimpan
+deactivate View
+
+deactivate User
+@enduml

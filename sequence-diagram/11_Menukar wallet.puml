@@ -1,0 +1,44 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (USD11: Menukar Wallet)
+
+actor Pengguna as User
+boundary "Swicth Wallet" as View
+control "Wallet" as System
+entity "Wallet" as DB2
+
+activate User
+User -> View: Masukan nama dan seed phrase
+activate View
+View -> System: Verify seed phrase
+deactivate View
+activate System
+
+alt Verify gagal
+    System -> View: Kembalikan gagal verify
+    activate View
+    View -> User: Tampilkan "seed phrase incoret"
+    deactivate View
+else Verify berhasil
+    System -> View: Kembalikan berhasil verify
+    deactivate System
+    activate View
+end
+    View -> System: Kirim nama dan seed phrasee
+    activate System
+    System -> DB2: CreateWalletByUserId()
+    deactivate System
+    activate DB2
+    DB2 -> System: Kirim ulang token dan privateKey
+    activate System
+    DB2 -> System: Kembalikan respon success create
+    deactivate DB2
+    System -> View: Kembalikan success create
+    deactivate System
+    View -> User: Tampilkan allert success
+    deactivate View
+deactivate User
+@enduml
