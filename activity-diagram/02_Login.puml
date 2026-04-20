@@ -19,7 +19,7 @@ kemudian klik tombol "Login";
 :Cek apakah mnemonic phrase sesuai dengan standart BIP39;
 if (Mnemonic valid?) then (Ya)
   :Lakukan Hash mnemonic phrase yang dimasukkan;
-  :Cocokkan hash mnemonic dengan database;
+  :Cocokkan hash publicKey dengan database;
   if (Hash cocok dengan database?) then (Ya)
     :Autentikasi berhasil;
     else (Tidak)

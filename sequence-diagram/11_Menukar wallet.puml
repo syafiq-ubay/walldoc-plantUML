@@ -27,12 +27,12 @@ else Verify berhasil
     deactivate System
     activate View
 end
-    View -> System: Kirim nama dan seed phrase
+    View -> System: Kirim nama dan data
     activate System
     System -> DB2: CreateWalletByUserId()
     deactivate System
     activate DB2
-    DB2 -> System: Kirim ulang token dan privateKey
+    DB2 -> System: Kirim ulang token
     activate System
     DB2 -> System: Kembalikan respon success create
     deactivate DB2
