@@ -3,10 +3,10 @@ skinparam defaultFontName "JetBrains Mono"
 skinparam defaultFontSize 14
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
-title Sequence Diagram - (USD03: Download Document)
+title Sequence Diagram - (F006: Membuka Document)
 
 actor Pengguna as User
-boundary "Download" as View
+boundary "Open" as View
 control "Document" as System
 entity "User" as DB
 entity "Document" as DB2
@@ -23,11 +23,10 @@ deactivate View
 alt Verify gagal
     activate DB
     DB -> System: Kembalikan respon gagal verify
-    ' deactivate DB
     System -> View: Kembalikan gagal verify
     deactivate System
     activate View
-    View -> User: Tampilkan "password incoret"
+    View -> User: Tampilkan "password incorrect"
     deactivate View
 else Verify berhasil
     DB -> System: Kembalikan respon berhasil verify
@@ -37,22 +36,22 @@ else Verify berhasil
     deactivate System
     activate View
 end
-    View -> System: Simpan password untuk decrypt
-    deactivate View
-    activate System
-    System -> DB2: GetPathDocument()
-    deactivate System
-    activate DB2
-    DB2 -> Storage: Download chiphertext file 
-    deactivate DB2
-    activate Storage
-    Storage -> System: Kembalikan chiphertext file 
-    deactivate Storage
-    activate System
-    System -> View: Decrypt chiphertext
-    deactivate System
-    activate View
-    View -> User: Kembalikan file hasil decrypt 
-    deactivate View
+View -> System: Kirim document id
+deactivate View
+activate System
+activate DB2
+System -> DB2: GetDocumentById()
+DB2 -> System: Kembalikan data document
+System -> DB2: GetPathDocument()
+DB2 -> Storage: Download chiphertext file 
+deactivate DB2
+activate Storage
+Storage -> System: Kembalikan chiphertext file 
+deactivate Storage
+System -> View: Decrypt chiphertext 
+deactivate System
+activate View
+View -> User: Tampilkan isi document
+deactivate View
 deactivate User
 @enduml

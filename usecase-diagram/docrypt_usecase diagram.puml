@@ -1,4 +1,4 @@
-@startuml
+@startumluy
 skinparam defaultFontName "JetBrains Mono"
 skinparam defaultFontSize 14
 skinparam defaultFontColor #222222
@@ -10,40 +10,37 @@ title Use Case Diagram - Wallet Document System
 actor Pengguna as p
 
 rectangle "Sistem Aplikasi Dompet Dokumen" {
-  (USD01: Register) as USD01
-  (USD02: Login) as USD02
-  (USD03: Download Dokumen) as USD03
-  (USD04: Mengelola Dokumen) as USD04
-  (USD05: Mengelola Dokumen Dibagikan Kepada Saya) as USD05
-  (USD06: Mengelola Dokumen Trash) as USD06
-  (USD07: Mengelola Contact) as USD07
-  (USD08: Mengelola Dokumen Share) as USD08
-  (USD09: Membuka Dokumen) as USD09
-  (USD10: Mengubah Password) as USD10
-  (USD11: Menukar Wallet) as USD11
-  (USD12: Logout) as USD12
+  (F001: Register) as F001
+  (F002: Login) as F002
+  (F003: Logout) as F003
+  (F004: Mengelola Dokumen) as F004
+  (F005: Download Dokumen) as F005
+  (F006: Membuka Dokumen) as F006
+  (F007: Mengelola Dokumen Share) as F007
+  (F008: Mengelola Dokumen Dibagikan Kepada Saya) as F008
+  (F009: Mengelola Contact) as F009
+  (F010: Mengelola Dokumen Trash) as F010
+  (F011: Menukar Wallet) as F011
+  (F012: Mengubah Password) as F012
 
 }
 
 ' ==================== RELATIONSHIP ====================
-p -- USD01
-p -- USD02
-' p -- USD03
-' USD03 ..> USD06 : <<extend>>
-' USD03 ..> USD07 : <<extend>>
-' USD03 ..> USD05 : <<extend>>
-p -- USD04
-USD04 ..> USD03 : <<extend>>
-USD04 ..> USD05 : <<extend>>
-USD04 ..> USD09 : <<extend>>
-' p -- USD05
-p -- USD06
-p -- USD07
-' p -- USD08
-USD07 ..> USD08 : <<extend>>
-' p -- USD09
-p -- USD10
-p -- USD11
-p -- USD12
+p -- F001
+p -- F002
+' ' USD03 ..> USD06 : <<extend>>
+' ' USD03 ..> USD07 : <<extend>>
+p -- F004
+F004 ..> F006 : <<extend>>
+F004 ..> F005 : <<extend>>
+F004 ..> F007 : <<extend>>
+F009 ..> F007 : <<extend>>
+' p -- F007
+p -- F009
+p -- F008
+p -- F010
+p -- F011
+p -- F012
+p -- F003
 
 @enduml

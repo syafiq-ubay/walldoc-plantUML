@@ -3,7 +3,7 @@ skinparam defaultFontName "JetBrains Mono"
 skinparam defaultFontSize 14
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
-title Sequence Diagram - (USD01: Register)
+title Sequence Diagram - (F001: Register)
 
 actor Pengguna as User
 boundary "Register" as View

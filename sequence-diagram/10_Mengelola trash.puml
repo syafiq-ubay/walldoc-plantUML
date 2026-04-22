@@ -3,7 +3,7 @@ skinparam defaultFontName "JetBrains Mono"
 skinparam defaultFontSize 14
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
-title Sequence Diagram - (USD06: Mengelola Trash)
+title Sequence Diagram - (F010: Mengelola Trash)
 
 actor Pengguna as User
 boundary "Trash" as View

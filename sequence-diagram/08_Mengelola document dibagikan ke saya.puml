@@ -3,7 +3,7 @@ skinparam defaultFontName "JetBrains Mono"
 skinparam defaultFontSize 14
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
-title Sequence Diagram - (USD05: Mengelola Documents Dibagikan kepada Saya)
+title Sequence Diagram - (F008: Mengelola Documents Dibagikan kepada Saya)
 
 actor Pengguna as User
 boundary "Shared With Me" as View

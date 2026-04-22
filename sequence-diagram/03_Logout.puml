@@ -1,0 +1,31 @@
+@startuml
+skinparam defaultFontName "JetBrains Mono"
+skinparam defaultFontSize 14
+skinparam defaultFontColor #222222
+skinparam titleFontSize 20
+title Sequence Diagram - (F003: Logout)
+
+actor Pengguna as User
+boundary "Logout" as View
+control "Auth" as System
+entity "Auth" as DB
+
+activate User
+User -> View: Logout aplikasi
+activate View
+View -> System: Kirim request logout
+activate System
+View -> System: Hapus token dan data session dari client
+deactivate View
+System -> DB: Logout()
+activate DB
+DB -> System: Hapus token dan data session
+deactivate DB
+System -> View: Kembalikan success logout
+activate View
+deactivate System
+' activate View
+View -> User: Tampilkan halaman login
+deactivate View
+deactivate User
+@enduml
