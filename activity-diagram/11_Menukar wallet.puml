@@ -5,7 +5,7 @@ skinparam defaultFontSize 12
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
 skinparam DefaultTextAlignment center
-title Activity Diagram - (USD11: Menukar Wallet)
+title Activity Diagram - (F011: Menukar Wallet)
 
 |<b><font size=16>Pengguna</font></b>|
 start

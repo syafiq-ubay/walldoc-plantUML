@@ -135,12 +135,11 @@ enum ContactStatus {
 ' ==================== RELATIONSHIP ====================
 User -[hidden]- Wallet
 User "1"--*"*" Wallet
-' User -- Document
-Wallet --o Document
-Folder --o Document
+Wallet "1"--o"*" Document
+Folder "1"--o"*" Document
 Document --* DocumentShare
-Wallet --* DocumentShare
-User -- Contact
+'Wallet -- DocumentShare
+User "1"--"*" Contact
 
 Document -[hidden]- MimeType
 ContactStatus -[hidden]- DocStatus

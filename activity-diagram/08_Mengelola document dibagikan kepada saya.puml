@@ -5,7 +5,7 @@ skinparam defaultFontSize 12
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
 skinparam DefaultTextAlignment center
-title Activity Diagram - (USD05: Mengelola Document Dibagikan Kepada saya)
+title Activity Diagram - (F008: Mengelola Document Dibagikan Kepada saya)
 
 |<b><font size=16>Pengguna</font></b>|
 start

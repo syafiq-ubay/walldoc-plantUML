@@ -5,23 +5,26 @@ skinparam defaultFontSize 12
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
 skinparam DefaultTextAlignment center
-title Activity Diagram - (USD10: Mengubah Password)
+title Activity Diagram - (F005: Download Dokumen)
 
 |<b><font size=16>Pengguna</font></b>|
 start
-:Klik profile user;
+:Klik menu "My file";
 |<b><font size=16>Sistem</font></b>|
-:Tampilkan menu user;
+:Tampilkan halaman "My file";
 |<b><font size=16>Pengguna</font></b>|
-:Klik "Change password" pada menu user;
+:Klik kanan file/folder yang diinginkan
+atau klik titik tiga jika view List
+kemudian pilih "Download";
 |<b><font size=16>Sistem</font></b>|
-:Menampilkan form untuk mengganti password;
+:Menampilkan form untuk masukan password action;
 |<b><font size=16>Pengguna</font></b>|
-:Masukan password lama dan password baru
-kemudian Klik "save change";
+:Masukkan password user kemudian Klik "Download";
 |<b><font size=16>Sistem</font></b>|
 if (apakah password valid?) then (Ya)
-    :Simpan update ke dalam database;
+    :Download ciphertext dari backend  
+    decrypt menggunakan private key, password dan id user;
+    :Kirimkan hasil decrypt ke browser user;
     else (Tidak)
     :Menampilkan error ke user;
   endif

@@ -4,7 +4,7 @@ skinparam defaultFontSize 12
 skinparam defaultFontColor #222222
 skinparam titleFontSize 20
 skinparam DefaultTextAlignment center
-title Activity Diagram - (USD02: Login)
+title Activity Diagram - (F002: Login)
 
 |<b><font size=16>Pengguna</font></b>|
 start
